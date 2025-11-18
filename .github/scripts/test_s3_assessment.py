@@ -372,6 +372,37 @@ class S3AssessmentTester:
         return self.failed == 0
 
 if __name__ == "__main__":
-    tester = S3AssessmentTester()
-    success = tester.run_all_tests()
-    exit(0 if success else 1)
+    try:
+        tester = S3AssessmentTester()
+        success = tester.run_all_tests()
+        exit(0 if success else 1)
+    except Exception as e:
+        # Ensure report is created even if initialization fails
+        error_report = [
+            "=" * 70,
+            "AWS S3 ASSESSMENT - TEST REPORT",
+            "=" * 70,
+            f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}",
+            "",
+            f"ERROR: Test execution failed",
+            f"Details: {str(e)}",
+            "",
+            "This usually indicates:",
+            "  - AWS credentials are not configured",
+            "  - Insufficient permissions to access AWS resources",
+            "  - Network connectivity issues",
+            "",
+            "Please ensure:",
+            "  1. AWS credentials are properly configured",
+            "  2. The IAM user/role has S3 read permissions",
+            "  3. You have network access to AWS services",
+            "=" * 70,
+            "STATUS: ✗ TESTS COULD NOT RUN - Configuration Error",
+            "=" * 70
+        ]
+        
+        report_text = "\n".join(error_report)
+        with open('test_report.log', 'w') as f:
+            f.write(report_text)
+        print(report_text)
+        exit(1)

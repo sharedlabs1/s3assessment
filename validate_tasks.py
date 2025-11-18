@@ -77,18 +77,25 @@ def trigger_github_action():
                         "--name", "test-report"
                     ]
                     
-                    download_result = subprocess.run(download_cmd, capture_output=True, text=True)
+                    download_result = subprocess.run(download_cmd, capture_output=True, text=True, cwd=os.getcwd())
                     if download_result.returncode == 0:
                         print("✓ Test report downloaded successfully")
                         
-                        # Display report
-                        if os.path.exists("test_report.log"):
+                        # Check if report exists and display it
+                        report_path = os.path.join(os.getcwd(), "test_report.log")
+                        if os.path.exists(report_path):
+                            print(f"✓ Report saved to: {report_path}")
                             print("\n" + "=" * 60)
                             print("TEST RESULTS")
                             print("=" * 60)
-                            with open("test_report.log", "r") as f:
+                            with open(report_path, "r") as f:
                                 print(f.read())
                             return True
+                        else:
+                            print(f"WARNING: Report file not found at {report_path}")
+                    else:
+                        print(f"ERROR: Failed to download artifact")
+                        print(download_result.stderr)
                     break
             
             time.sleep(6)
