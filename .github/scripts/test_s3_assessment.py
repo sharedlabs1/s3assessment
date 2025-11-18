@@ -11,17 +11,21 @@ from datetime import datetime
 from typing import Dict, List, Tuple
 
 class S3AssessmentTester:
-    def __init__(self):
+    def __init__(self, student_id=None):
         self.s3_client = boto3.client('s3')
         self.sts_client = boto3.client('sts')
         self.account_id = self.sts_client.get_caller_identity()['Account']
         
+        # Use student_id if provided, otherwise fall back to account_id for backward compatibility
+        identifier = student_id if student_id else self.account_id
+        
         self.bucket_names = {
-            'raw': f'mediaflow-raw-{self.account_id}',
-            'processed': f'mediaflow-processed-{self.account_id}',
-            'archive': f'mediaflow-archive-{self.account_id}'
+            'raw': f'mediaflow-raw-{identifier}',
+            'processed': f'mediaflow-processed-{identifier}',
+            'archive': f'mediaflow-archive-{identifier}'
         }
         
+        self.student_id = student_id
         self.results = []
         self.passed = 0
         self.failed = 0
@@ -339,6 +343,8 @@ class S3AssessmentTester:
         report.append("=" * 70)
         report.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}")
         report.append(f"Account ID: {self.account_id}")
+        if self.student_id:
+            report.append(f"Student ID: {self.student_id}")
         report.append("")
         report.append(f"SUMMARY: {self.passed} passed, {self.failed} failed")
         report.append("=" * 70)
@@ -388,8 +394,12 @@ class S3AssessmentTester:
         return self.failed == 0
 
 if __name__ == "__main__":
+    import sys
+    # Get student_id from command line argument if provided
+    student_id = sys.argv[1] if len(sys.argv) > 1 else None
+    
     try:
-        tester = S3AssessmentTester()
+        tester = S3AssessmentTester(student_id=student_id)
         success = tester.run_all_tests()
         exit(0 if success else 1)
     except Exception as e:

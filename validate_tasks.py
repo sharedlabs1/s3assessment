@@ -18,6 +18,15 @@ def trigger_github_action():
     print(f"Timestamp: {datetime.now().isoformat()}")
     print()
     
+    # Prompt for student ID
+    student_id = input("Enter your Student ID: ").strip()
+    if not student_id:
+        print("ERROR: Student ID is required")
+        return False
+    
+    print(f"Student ID: {student_id}")
+    print()
+    
     # GitHub repository and workflow details
     REPO = "sharedlabs1/s3assessment"
     WORKFLOW = "validate-s3.yml"
@@ -34,7 +43,8 @@ def trigger_github_action():
             "--repo", REPO,
             "--ref", "main",
             "-f", f"assessment_type=s3",
-            "-f", f"timestamp={datetime.now().isoformat()}"
+            "-f", f"timestamp={datetime.now().isoformat()}",
+            "-f", f"student_id={student_id}"
         ]
         
         result = subprocess.run(cmd, capture_output=True, text=True)

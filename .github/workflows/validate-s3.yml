@@ -10,6 +10,9 @@ on:
       timestamp:
         description: 'Submission timestamp'
         required: true
+      student_id:
+        description: 'Student ID'
+        required: true
 
 jobs:
   validate:
@@ -39,7 +42,7 @@ jobs:
       
       - name: Run S3 Assessment Tests
         run: |
-          python .github/scripts/test_s3_assessment.py
+          python .github/scripts/test_s3_assessment.py "${{ inputs.student_id }}"
         continue-on-error: true
       
       - name: Upload Test Report
