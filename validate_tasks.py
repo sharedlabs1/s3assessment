@@ -19,7 +19,7 @@ def trigger_github_action():
     print()
     
     # GitHub repository and workflow details
-    REPO = "your-org/aws-assessment-validator"
+    REPO = "sharedlabs1/s3assessment"
     WORKFLOW = "validate-s3.yml"
     
     print("Triggering GitHub Action for validation...")

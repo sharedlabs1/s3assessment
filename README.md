@@ -1,5 +1,7 @@
 # AWS S3 Assessment - Data Lake Setup
 
+github-repo: https://github.com/sharedlabs1/s3assessment
+
 ## Scenario
 You are a cloud engineer at MediaFlow Inc. Your task is to set up a secure and cost-optimized S3 data lake infrastructure.
 
