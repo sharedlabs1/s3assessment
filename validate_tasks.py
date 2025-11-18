@@ -69,12 +69,38 @@ def trigger_github_action():
                 runs = json.loads(run_result.stdout)
                 if runs and runs[0]['status'] == 'completed':
                     run_id = runs[0]['databaseId']
+                    conclusion = runs[0].get('conclusion', 'unknown')
+                    
+                    print(f"✓ Workflow completed with status: {conclusion}")
+                    print(f"  Run ID: {run_id}")
+                    
+                    # Check if artifacts are available
+                    list_artifacts_cmd = [
+                        "gh", "run", "view", str(run_id),
+                        "--repo", REPO,
+                        "--json", "artifacts"
+                    ]
+                    
+                    artifacts_result = subprocess.run(list_artifacts_cmd, capture_output=True, text=True)
+                    if artifacts_result.returncode == 0:
+                        artifacts_data = json.loads(artifacts_result.stdout)
+                        artifacts = artifacts_data.get('artifacts', [])
+                        print(f"  Found {len(artifacts)} artifact(s)")
+                        
+                        if not artifacts:
+                            print("\n⚠ WARNING: No artifacts were created by the workflow")
+                            print("This usually means the test script failed to create test_report.log")
+                            print("\nTo debug, check the workflow logs:")
+                            print(f"  gh run view {run_id} --repo {REPO} --log")
+                            return False
                     
                     # Download artifacts (test_report.log)
+                    print("\nDownloading test report...")
                     download_cmd = [
                         "gh", "run", "download", str(run_id),
                         "--repo", REPO,
-                        "--name", "test-report"
+                        "--name", "test-report",
+                        "--dir", os.getcwd()
                     ]
                     
                     download_result = subprocess.run(download_cmd, capture_output=True, text=True, cwd=os.getcwd())
@@ -96,6 +122,8 @@ def trigger_github_action():
                     else:
                         print(f"ERROR: Failed to download artifact")
                         print(download_result.stderr)
+                        print("\nTo manually check the logs:")
+                        print(f"  gh run view {run_id} --repo {REPO} --log")
                     break
             
             time.sleep(6)
