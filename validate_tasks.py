@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-AWS S3 Assessment Validation Script
+AWS Assessment Validation Script
 Triggers GitHub Action for automated testing
+Supports multiple AWS service assessments
 """
 
 import json
@@ -10,8 +11,12 @@ import sys
 import os
 from datetime import datetime
 
-def trigger_github_action():
-    """Trigger GitHub Action workflow"""
+def trigger_github_action(service_name="s3"):
+    """Trigger GitHub Action workflow
+    
+    Args:
+        service_name: The AWS service being assessed (e.g., 's3', 'ec2', 'lambda')
+    """
     # Clean up any existing test report file
     report_file = os.path.join(os.getcwd(), "test_report.log")
     if os.path.exists(report_file):
@@ -22,7 +27,7 @@ def trigger_github_action():
             print(f"Warning: Could not remove existing report file: {e}\n")
     
     print("=" * 60)
-    print("AWS S3 Assessment - Validation Started")
+    print(f"AWS {service_name.upper()} Assessment - Validation Started")
     print("=" * 60)
     print(f"Timestamp: {datetime.now().isoformat()}")
     print()
@@ -34,11 +39,12 @@ def trigger_github_action():
         return False
     
     print(f"Student ID: {student_id}")
+    print(f"Service: {service_name.upper()}")
     print()
     
     # GitHub repository and workflow details
     REPO = "sharedlabs1/s3assessment"
-    WORKFLOW = "validate-s3.yml"
+    WORKFLOW = "validate.yml"  # Generic workflow name
     
     print("Triggering GitHub Action for validation...")
     print(f"Repository: {REPO}")
@@ -51,7 +57,7 @@ def trigger_github_action():
             "gh", "workflow", "run", WORKFLOW,
             "--repo", REPO,
             "--ref", "main",
-            "-f", f"assessment_type=s3",
+            "-f", f"assessment_type={service_name}",
             "-f", f"timestamp={datetime.now().isoformat()}",
             "-f", f"student_id={student_id}"
         ]
@@ -159,5 +165,9 @@ def trigger_github_action():
         return False
 
 if __name__ == "__main__":
-    success = trigger_github_action()
+    # Check if service name is provided as command line argument
+    service = sys.argv[1] if len(sys.argv) > 1 else "s3"
+    
+    print(f"Running validation for: {service.upper()}\n")
+    success = trigger_github_action(service_name=service)
     sys.exit(0 if success else 1)

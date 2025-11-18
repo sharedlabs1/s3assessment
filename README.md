@@ -2,13 +2,18 @@
 
 github-repo: https://github.com/sharedlabs1/s3assessment
 
+**Note:** This repository supports multiple AWS service assessments. For other services, see:
+- S3 Assessment: `README.md` (this file) - run with `python validate_tasks.py s3` or just `python validate_tasks.py`
+- EC2 Assessment: `README_ec2.md` - run with `python validate_tasks.py ec2`
+- More assessments coming soon...
+
 ## Scenario
 You are a cloud engineer at MediaFlow Inc. Your task is to set up a secure and cost-optimized S3 data lake infrastructure.
 
 ## Prerequisites
 - Access to the shared AWS training account
 - Python 3.8+ installed
-- GitHub CLI (`gh`) installed and authenticated
+- GitHub CLI (`gh`) installed
 
 ## Setup
 
@@ -20,11 +25,6 @@ You are a cloud engineer at MediaFlow Inc. Your task is to set up a secure and c
 2. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
-```
-
-3. **Authenticate with GitHub CLI** (one-time setup):
-```bash
-gh auth login
 ```
 
 That's it! You're ready to start the assessment.
