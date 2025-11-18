@@ -12,6 +12,15 @@ from datetime import datetime
 
 def trigger_github_action():
     """Trigger GitHub Action workflow"""
+    # Clean up any existing test report file
+    report_file = os.path.join(os.getcwd(), "test_report.log")
+    if os.path.exists(report_file):
+        try:
+            os.remove(report_file)
+            print(f"Removed existing test report: {report_file}\n")
+        except Exception as e:
+            print(f"Warning: Could not remove existing report file: {e}\n")
+    
     print("=" * 60)
     print("AWS S3 Assessment - Validation Started")
     print("=" * 60)

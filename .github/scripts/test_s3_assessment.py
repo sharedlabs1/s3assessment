@@ -4,11 +4,10 @@ S3 Assessment Test Cases
 Tests learner's S3 configuration against requirements
 """
 
-import boto3
+import boto3  # type: ignore
 import json
 import traceback
 from datetime import datetime
-from typing import Dict, List, Tuple
 
 class S3AssessmentTester:
     def __init__(self, student_id=None):
@@ -289,11 +288,6 @@ class S3AssessmentTester:
         ]
         
         try:
-            response = self.s3_client.list_objects_v2(
-                Bucket=raw_bucket,
-                Delimiter='/'
-            )
-            
             all_objects = self.s3_client.list_objects_v2(Bucket=raw_bucket)
             all_keys = [obj['Key'] for obj in all_objects.get('Contents', [])]
             
@@ -414,6 +408,12 @@ if __name__ == "__main__":
             "=" * 70,
             f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}",
             "Account ID: Unable to retrieve (credentials error)",
+        ]
+        
+        if student_id:
+            error_report.append(f"Student ID: {student_id}")
+        
+        error_report.extend([
             "",
             "SUMMARY: 0 passed, 18 failed",
             "=" * 70,
@@ -514,7 +514,7 @@ if __name__ == "__main__":
             "=" * 70,
             "STATUS: ✗ ALL TESTS FAILED - AWS Configuration Error",
             "=" * 70
-        ]
+        ])
         
         report_text = "\n".join(error_report)
         with open('test_report.log', 'w') as f:
