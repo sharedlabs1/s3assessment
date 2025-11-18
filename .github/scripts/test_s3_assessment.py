@@ -6,6 +6,7 @@ Tests learner's S3 configuration against requirements
 
 import boto3
 import json
+import traceback
 from datetime import datetime
 from typing import Dict, List, Tuple
 
@@ -356,10 +357,25 @@ class S3AssessmentTester:
     
     def run_all_tests(self):
         """Run all test cases"""
-        self.test_task1_bucket_creation()
-        self.test_task2_lifecycle_policies()
-        self.test_task3_policies_and_tags()
-        self.test_task4_folder_structure_and_upload()
+        try:
+            self.test_task1_bucket_creation()
+        except Exception as e:
+            self.log_result(False, "Task 1 - Critical Error", f"Error running Task 1 tests: {str(e)}")
+        
+        try:
+            self.test_task2_lifecycle_policies()
+        except Exception as e:
+            self.log_result(False, "Task 2 - Critical Error", f"Error running Task 2 tests: {str(e)}")
+        
+        try:
+            self.test_task3_policies_and_tags()
+        except Exception as e:
+            self.log_result(False, "Task 3 - Critical Error", f"Error running Task 3 tests: {str(e)}")
+        
+        try:
+            self.test_task4_folder_structure_and_upload()
+        except Exception as e:
+            self.log_result(False, "Task 4 - Critical Error", f"Error running Task 4 tests: {str(e)}")
         
         report = self.generate_report()
         
@@ -377,27 +393,116 @@ if __name__ == "__main__":
         success = tester.run_all_tests()
         exit(0 if success else 1)
     except Exception as e:
-        # Ensure report is created even if initialization fails
+        # Create a detailed failure report when initialization fails
+        error_type = type(e).__name__
+        error_msg = str(e)
+        
+        # Build a comprehensive failure report marking all tests as failed
         error_report = [
             "=" * 70,
             "AWS S3 ASSESSMENT - TEST REPORT",
             "=" * 70,
             f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}",
+            "Account ID: Unable to retrieve (credentials error)",
             "",
-            f"ERROR: Test execution failed",
-            f"Details: {str(e)}",
-            "",
-            "This usually indicates:",
-            "  - AWS credentials are not configured",
-            "  - Insufficient permissions to access AWS resources",
-            "  - Network connectivity issues",
-            "",
-            "Please ensure:",
-            "  1. AWS credentials are properly configured",
-            "  2. The IAM user/role has S3 read permissions",
-            "  3. You have network access to AWS services",
+            "SUMMARY: 0 passed, 18 failed",
             "=" * 70,
-            "STATUS: ✗ TESTS COULD NOT RUN - Configuration Error",
+            "",
+            f"[FAIL] Initialization Failed",
+            f"       Error Type: {error_type}",
+            f"       Error: {error_msg}",
+            "",
+            "=" * 70,
+            "TASK 1: S3 BUCKET CREATION - ALL TESTS FAILED",
+            "=" * 70,
+            "",
+            "[FAIL] Task 1.1.RAW - Bucket Exists",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.1.PROCESSED - Bucket Exists",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.1.ARCHIVE - Bucket Exists",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.2.RAW - Versioning Enabled",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.2.PROCESSED - Versioning Enabled",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.3.RAW - Encryption Enabled",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.3.PROCESSED - Encryption Enabled",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.3.ARCHIVE - Encryption Enabled",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.4.RAW - Public Access Blocked",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.4.PROCESSED - Public Access Blocked",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 1.4.ARCHIVE - Public Access Blocked",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 2.1 - Raw Bucket Lifecycle",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 2.2 - Processed Bucket Lifecycle",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 3.1 - Raw Bucket Policy",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 3.2.RAW - Bucket Tags",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 3.2.PROCESSED - Bucket Tags",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 3.3 - Server Access Logging",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 4.1 - Folder Structure",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "[FAIL] Task 4.2 - Test File Upload",
+            "       Cannot verify - AWS credentials not configured or invalid",
+            "",
+            "=" * 70,
+            "DIAGNOSTIC INFORMATION",
+            "=" * 70,
+            "",
+            "Error Details:",
+            f"  Type: {error_type}",
+            f"  Message: {error_msg}",
+            "",
+            "Stack Trace:",
+            traceback.format_exc(),
+            "",
+            "Common Causes:",
+            "  - AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) not set",
+            "  - Invalid or expired AWS credentials",
+            "  - Insufficient IAM permissions",
+            "  - Network connectivity issues to AWS",
+            "",
+            "Solutions:",
+            "  1. Configure AWS credentials as GitHub Secrets:",
+            "     - AWS_ACCESS_KEY_ID",
+            "     - AWS_SECRET_ACCESS_KEY",
+            "  2. Ensure the IAM user/role has these permissions:",
+            "     - s3:ListBucket, s3:GetObject, s3:GetBucketVersioning",
+            "     - s3:GetEncryptionConfiguration, s3:GetBucketPublicAccessBlock",
+            "     - s3:GetLifecycleConfiguration, s3:GetBucketPolicy",
+            "     - s3:GetBucketTagging, s3:GetBucketLogging",
+            "  3. Verify network access to AWS services",
+            "",
+            "=" * 70,
+            "STATUS: ✗ ALL TESTS FAILED - AWS Configuration Error",
             "=" * 70
         ]
         
