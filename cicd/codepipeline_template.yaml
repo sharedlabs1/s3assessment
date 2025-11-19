@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Starter CodePipeline template (skeleton). Complete TODO_CHECKLIST sections.
+
+Parameters:
+  ArtifactBucket:
+    Type: String
+    Description: S3 bucket for artifacts
+
+Resources:
+  # TODO_CHECKLIST - [ ] Define CodeBuild project and CodePipeline resources
+  # TODO_CHECKLIST - [ ] Parameterize roles and artifact store
+
+Outputs:
+  PipelineName:
+    Description: Name of the pipeline
+    Value: !Ref "AWS::NoValue"

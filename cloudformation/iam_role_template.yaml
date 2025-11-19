@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: IAM role + policy for EC2 to read from a specified S3 bucket. Complete the TODO_CHECKLIST items.
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: The S3 bucket name (without ARN)
+
+Resources:
+  EC2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ec2.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      Path: /
+      Policies:
+        - PolicyName: S3ReadOnlyPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource: # TODO_CHECKLIST - replace with Parameterized ARNs
+                  - !Sub arn:aws:s3:::${BucketName}
+                  - !Sub arn:aws:s3:::${BucketName}/*
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2InstanceRole
+
+Outputs:
+  RoleArn:
+    Description: ARN of the EC2 instance role
+    Value: !GetAtt EC2InstanceRole.Arn
+
+# TODO_CHECKLIST - [ ] Use Parameters for bucket name and narrow the Resource ARNs
+# TODO_CHECKLIST - [ ] Explain why this policy is least-privilege for the exercise

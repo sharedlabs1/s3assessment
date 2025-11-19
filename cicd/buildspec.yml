@@ -1,0 +1,18 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Installing
+      # TODO_CHECKLIST - [ ] Add package installation commands
+  build:
+    commands:
+      - echo Building
+      # TODO_CHECKLIST - [ ] Add build commands
+  post_build:
+    commands:
+      - echo Post build
+      # TODO_CHECKLIST - [ ] Run tests and prepare artifacts
+
+artifacts:
+  files:
+    - '**/*'

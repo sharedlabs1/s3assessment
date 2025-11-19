@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Production-like infra template (multi-AZ VPC, NAT, ASG, IAM role). Complete TODO_CHECKLIST sections.
+
+Parameters:
+  AvailabilityZones:
+    Type: List<AWS::EC2::AvailabilityZone::Name>
+    Default: [ us-east-1a, us-east-1b ]
+    Description: Availability Zones to use
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+
+  # Public and private subnets for two AZs (example)
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: !Select [0, !Ref AvailabilityZones]
+
+  PrivateSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !Ref AvailabilityZones]
+
+  # NAT Gateway, route tables and ASG are expected; keep sizes small to limit cost
+
+Outputs:
+  VpcId:
+    Value: !Ref VPC
+  PublicSubnetIds:
+    Value: !Join [",", [!Ref PublicSubnetA]]
+
+# TODO_CHECKLIST - [ ] Add NAT Gateway and private subnet routing
+# TODO_CHECKLIST - [ ] Add Auto Scaling Group and IAM role with minimal privileges
+# TODO_CHECKLIST - [ ] Include at least one Parameter and one Mapping
