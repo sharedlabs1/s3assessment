@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS sample_table (
 -- COPY command would be used by students to load CSV from S3
 -- COPY sample_table FROM 's3://redshift-glue-<student-id>/processed/' IAM_ROLE 'arn:aws:iam::<account-id>:role/RedshiftRole' CSV;
 
--- TODO: Replace the above with your own CREATE/COPY commands.
+-- TODO_CHECKLIST: Replace the above with your own CREATE/COPY commands.
 -- Example COPY (adjust bucket, IAM role and format):
 -- COPY sample_table
 -- FROM 's3://redshift-glue-<your-student-id>/processed/'
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS sample_table (
 -- FORMAT AS PARQUET;
 
 -- Checklist (short):
--- - [ ] Create appropriate table schema for your dataset
--- - [ ] Use COPY with correct IAM role and S3 path
--- - [ ] Verify data loaded with SELECT COUNT(*)
--- - [ ] Document commands used in notes.txt
+-- TODO_CHECKLIST - [ ] Create appropriate table schema for your dataset
+-- TODO_CHECKLIST - [ ] Use COPY with correct IAM role and S3 path
+-- TODO_CHECKLIST - [ ] Verify data loaded with SELECT COUNT(*)
+-- TODO_CHECKLIST - [ ] Document commands used in notes.txt

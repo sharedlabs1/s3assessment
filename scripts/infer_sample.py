@@ -21,7 +21,7 @@ def main():
 	args = parse_args()
 
 	payload = {"features": [1, 2, 3]} if not args.payload else args.payload
-	print('TODO: Replace this mock with a real inference call to your endpoint')
+	print('TODO_CHECKLIST: Replace this mock with a real inference call to your endpoint')
 	print('Endpoint:', args.endpoint)
 	print('Payload:', payload)
 
@@ -37,8 +37,8 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# Checklist (short):
-# - [ ] Replace mock payload with real JSON input appropriate for your model
-# - [ ] Use boto3 sagemaker-runtime to invoke the endpoint in non-mock runs
-# - [ ] Provide --endpoint param when testing against a deployed SageMaker endpoint
-# - [ ] Print or persist inference result to S3 for verification
+# Checklist (short) — maps to AIML+EMR tasks:
+# TODO_CHECKLIST - [ ] Ensure training data is written to s3://aiml-emr-<student-id>/training/
+# TODO_CHECKLIST - [ ] Provide --endpoint to call the real SageMaker endpoint
+# TODO_CHECKLIST - [ ] Invoke endpoint and write prediction results to S3 (e.g., s3://aiml-emr-<student-id>/predictions/)
+# TODO_CHECKLIST - [ ] Document inference steps and sample payloads in `notes.txt`

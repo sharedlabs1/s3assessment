@@ -14,6 +14,6 @@ LIMIT 10;
 -- ORDER BY month;
 
 -- Checklist (short):
--- - [ ] Update database.table to match your Glue Catalog
--- - [ ] Verify partition columns are registered in Glue
--- - [ ] Run the query in Athena and save results or screenshots if required
+-- TODO_CHECKLIST - [ ] Update database.table to match your Glue Catalog
+-- TODO_CHECKLIST - [ ] Verify partition columns are registered in Glue
+-- TODO_CHECKLIST - [ ] Run the query in Athena and save results or screenshots if required

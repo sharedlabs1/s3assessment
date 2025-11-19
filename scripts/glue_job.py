@@ -21,7 +21,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    print('TODO: Replace this template with your Glue ETL code')
+    print('TODO_CHECKLIST: Replace this template with your Glue ETL code')
     print(f'Input: {args.input}')
     print(f'Output: {args.output}')
 
@@ -39,10 +39,9 @@ def main():
 if __name__ == '__main__':
     main()
 
-# Checklist (short):
-# - [ ] Initialize GlueContext and SparkContext (if running on Glue)
-# - [ ] Read raw data from --input (S3 path)
-# - [ ] Apply transformations and cleaning steps
-# - [ ] Write processed data to --output in partitioned Parquet
-# - [ ] Register or update Glue Catalog tables if required
-# - [ ] Remove these TODO lines after implementing
+# Checklist (short) — maps to README Redshift+Glue / S3+Glue tasks:
+# TODO_CHECKLIST - [ ] Run Glue Crawler to register raw table/schema
+# TODO_CHECKLIST - [ ] Read partitioned CSV input from --input (year=/month=)
+# TODO_CHECKLIST - [ ] Convert to Parquet and write partitioned outputs to --output
+# TODO_CHECKLIST - [ ] Update Glue Catalog or create processed table
+# TODO_CHECKLIST - [ ] Document steps and queries in `sql/` and `notes.txt`

@@ -10,6 +10,6 @@ SELECT * FROM sample_table LIMIT 10;
 -- ORDER BY total_spent DESC;
 
 -- Checklist (short):
--- - [ ] Add required query files requested by the README (e.g., customer_order_summary.sql)
--- - [ ] Ensure queries include comments indicating which task they satisfy
--- - [ ] Save queries under `queries/` as specified by the assessment
+-- TODO_CHECKLIST - [ ] Add required query files requested by the README (e.g., customer_order_summary.sql)
+-- TODO_CHECKLIST - [ ] Ensure queries include comments indicating which task they satisfy
+-- TODO_CHECKLIST - [ ] Save queries under `queries/` as specified by the assessment

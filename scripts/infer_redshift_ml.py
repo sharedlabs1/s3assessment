@@ -18,7 +18,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    print('TODO: Use AWS CLI or boto3 redshift-data to execute inference SQL')
+    print('TODO_CHECKLIST: Use AWS CLI or boto3 redshift-data to execute inference SQL')
     print(f'Workgroup: {args.workgroup}, SQL: {args.sql_file}')
 
     # Example (commented):
@@ -31,8 +31,8 @@ def main():
 if __name__ == '__main__':
     main()
 
-# Checklist (short):
-# - [ ] Prepare SQL that runs prediction queries (Redshift ML or UDF) and saves results
-# - [ ] Use redshift-data or AWS CLI to execute SQL and capture results
-# - [ ] Export predictions to S3 for downstream verification
-# - [ ] Document the commands used in notes.txt
+# Checklist (short) — maps to Redshift+AIML tasks:
+# TODO_CHECKLIST - [ ] COPY dataset from s3://redshift-ml-<student-id>/dataset/ into Redshift table
+# TODO_CHECKLIST - [ ] Train model using Redshift ML or SageMaker and save model artifacts
+# TODO_CHECKLIST - [ ] Run prediction SQL and export results to s3://redshift-ml-<student-id>/predictions/
+# TODO_CHECKLIST - [ ] Record SQL and commands used in `notes.txt`

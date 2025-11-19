@@ -23,7 +23,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    print('TODO: Replace this template with your PySpark logic')
+    print('TODO_CHECKLIST: Replace this template with your PySpark logic')
     print(f'Input path: {args.input}')
     print(f'Output path: {args.output}')
 
@@ -38,9 +38,9 @@ def main():
 if __name__ == '__main__':
     main()
     
-# Checklist (short):
-# - [ ] Update this file with PySpark imports and SparkSession initialization
-# - [ ] Read input from --input (S3 path) and infer schema or provide schema
-# - [ ] Implement cleaning/transformation steps required by the task
-# - [ ] Write results to --output in Parquet or CSV as requested
-# - [ ] Remove these TODO lines after implementing
+# Checklist (short) — maps to README S3+EMR tasks:
+# TODO_CHECKLIST - [ ] Create S3 bucket `s3-emr-<student-id>` and upload dataset under input/
+# TODO_CHECKLIST - [ ] Read CSV from --input and infer schema or define schema
+# TODO_CHECKLIST - [ ] Implement aggregation (group-by count or sum) as required by the task
+# TODO_CHECKLIST - [ ] Write aggregated results to --output (S3 path) in Parquet/CSV
+# TODO_CHECKLIST - [ ] Add commands used to `notes.txt` and CLEANUP.md
