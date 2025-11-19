@@ -109,10 +109,30 @@ def test_aggregated_content(s3, bucket):
 
 def test_scripts_present():
     files = ['scripts/spark_job.py']
-    found = sum(1 for f in files if os.path.exists(f))
-    ok = found > 0
-    print(f"✅ Script files present") if ok else print('❌ Script files missing')
-    return ok, f"Scripts found: {found}"
+    found = 0
+    msgs = []
+    for f in files:
+        if os.path.exists(f):
+            found += 1
+            # check file contains TODO guidance
+            try:
+                with open(f, 'r') as fh:
+                    content = fh.read()
+                if 'TODO' in content:
+                    msgs.append(f"{f}: contains TODO")
+                else:
+                    msgs.append(f"{f}: exists but missing TODO")
+            except Exception:
+                msgs.append(f"{f}: exists but could not read")
+        else:
+            msgs.append(f"{f}: missing")
+
+    ok = found > 0 and any('contains TODO' in m for m in msgs)
+    if ok:
+        print("✅ Script files present with TODO guidance")
+    else:
+        print('❌ Script files missing or missing TODO guidance')
+    return ok, f"Scripts check: {'; '.join(msgs)}"
 
 
 def test_cleanup_instructions():

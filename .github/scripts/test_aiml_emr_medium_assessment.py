@@ -92,8 +92,20 @@ def test_emr_job_history(emr, student_id):
 
 
 def test_sample_inference_call():
-    ok = os.path.exists('scripts/infer_sample.py')
-    return ok, f"Sample inference script present: {ok}"
+    path = 'scripts/infer_sample.py'
+    ok = os.path.exists(path)
+    msg = f"Sample inference script present: {ok}"
+    if ok:
+        try:
+            with open(path, 'r') as fh:
+                c = fh.read()
+            if 'TODO' in c:
+                msg += '; TODO found'
+            else:
+                msg += '; TODO missing'
+        except Exception as e:
+            msg += f'; read error: {e}'
+    return ok, msg
 
 
 def test_readme_present(student_id):

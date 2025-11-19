@@ -32,3 +32,15 @@ python validate_tasks.py redshift_aiml_easy
 ```
 
 The validation helper triggers the GitHub Action which produces `test_report.log` in the repository root.
+
+Starter files (lightweight templates)
+
+The repository includes a few starter files you can edit:
+
+- `sql/load_to_redshift.sql` — basic CREATE/COPY SQL placeholder
+- `scripts/infer_redshift_ml.py` — sample inference helper
+- `notes.txt` — brief notes template
+
+They are minimal templates — expand them with your data loading and ML steps.
+
+See the template: `sql/load_to_redshift.sql` and `scripts/infer_redshift_ml.py` for examples and checklists.

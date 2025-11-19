@@ -43,7 +43,22 @@ def test_glue_crawler(glue, crawler):
 def test_glue_job(glue, job):
     try:
         resp = glue.get_job(JobName=job)
-        return True, f"Job {job} exists"
+        # ensure job script template contains TODO guidance
+        msg = f"Job {job} exists"
+        path = 'scripts/glue_job.py'
+        if os.path.exists(path):
+            try:
+                with open(path, 'r') as fh:
+                    c = fh.read()
+                if 'TODO' in c:
+                    msg += '; template TODO found'
+                else:
+                    msg += '; template TODO missing'
+            except Exception as e:
+                msg += f'; read error: {e}'
+        else:
+            msg += '; template not present'
+        return True, msg
     except Exception:
         return False, f"Job {job} missing"
 

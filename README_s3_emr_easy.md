@@ -33,3 +33,17 @@ python validate_tasks.py s3_emr_easy
 ```
 
 The validation helper triggers the repository GitHub Action which runs the checks and downloads `test_report.log` into the repository root. Use the GitHub Action run logs to debug failures.
+
+Starter files (lightweight templates)
+
+This repository includes small starter files you can edit as part of the assessment:
+
+- `scripts/spark_job.py` — minimal PySpark job placeholder
+- `scripts/bootstrap.sh` — example bootstrap action script
+- `CLEANUP.md` — suggested cleanup steps
+
+See the template: `scripts/spark_job.py` for the PySpark skeleton and TODO checklist.
+
+Templates include short inline checklists marked with the token `TODO` — the validator looks for these to guide grading.
+
+These are templates only (not solutions). Edit them to implement your job logic.

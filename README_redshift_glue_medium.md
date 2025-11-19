@@ -33,3 +33,18 @@ python validate_tasks.py redshift_glue_medium
 ```
 
 The helper will trigger the repository GitHub Action which produces `test_report.log` in the repo root. Inspect the action logs for troubleshooting.
+
+Starter files (lightweight templates)
+
+This repo provides small starter artifacts for the assessment:
+
+- `sql/load_to_redshift.sql` — placeholder SQL for table creation/COPY
+- `sql/queries.sql` — example queries students can expand
+- `scripts/glue_job.py` — minimal Glue ETL script placeholder
+- `CLEANUP.md` — cleanup instructions
+
+These files are templates — replace or extend them with your ETL logic.
+
+See the template: `sql/load_to_redshift.sql` for an example CREATE/COPY and checklist.
+
+Templates include short inline checklists marked with the token `TODO` — the validator looks for these to guide grading.

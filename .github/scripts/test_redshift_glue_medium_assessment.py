@@ -81,7 +81,19 @@ def test_redshift_cluster(rs, identifier):
 def test_redshift_table(rs, cluster_id):
     # Best effort: check if SQL file exists indicating loading
     ok = os.path.exists('sql/load_to_redshift.sql')
-    return ok, f"Load SQL present: {ok}"
+    msg = f"Load SQL present: {ok}"
+    # If present, ensure it contains TODO guidance
+    if ok:
+        try:
+            with open('sql/load_to_redshift.sql', 'r') as fh:
+                content = fh.read()
+            if 'TODO' in content:
+                msg += '; TODO found'
+            else:
+                msg += '; TODO missing'
+        except Exception as e:
+            msg += f'; read error: {e}'
+    return ok, msg
 
 
 def test_sql_queries():

@@ -78,8 +78,20 @@ def test_readme_present():
 
 
 def test_sample_inference_script():
-    ok = os.path.exists('scripts/infer_redshift_ml.py')
-    return ok, f"Inference script present: {ok}"
+    path = 'scripts/infer_redshift_ml.py'
+    ok = os.path.exists(path)
+    msg = f"Inference script present: {ok}"
+    if ok:
+        try:
+            with open(path, 'r') as fh:
+                c = fh.read()
+            if 'TODO' in c:
+                msg += '; TODO found'
+            else:
+                msg += '; TODO missing'
+        except Exception as e:
+            msg += f'; read error: {e}'
+    return ok, msg
 
 
 def main():

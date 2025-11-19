@@ -1,0 +1,7 @@
+Notes (placeholder) - describe steps taken, any assumptions, and commands used.
+
+Checklist (short):
+- [ ] Record commands you ran (AWS CLI or console steps)
+- [ ] Note IAM roles/policies created and their ARNs
+- [ ] List S3 bucket names and prefixes used
+- [ ] Summarize verification steps and any errors encountered

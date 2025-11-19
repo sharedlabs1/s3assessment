@@ -33,3 +33,18 @@ python validate_tasks.py aiml_emr_medium
 ```
 
 This triggers the repository GitHub Action and downloads `test_report.log` into the repo root when complete.
+
+Starter files (lightweight templates)
+
+To help you get started, the repository includes small placeholders you may edit:
+
+- `scripts/spark_job.py` — simple PySpark job template for preprocessing
+- `scripts/glue_job.py` — Glue ETL placeholder
+- `scripts/infer_sample.py` — example inference script for endpoint testing
+- `notes.txt` — space to record assumptions and steps
+
+These are tiny templates (no AWS calls). Fill them with your own code as part of the assessment.
+
+See the template: `scripts/infer_sample.py` for an example inference helper and checklist.
+
+Templates include short inline checklists marked with the token `TODO` — the validator looks for these to guide grading.

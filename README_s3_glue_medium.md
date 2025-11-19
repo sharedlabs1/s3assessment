@@ -32,3 +32,15 @@ python validate_tasks.py s3_glue_medium
 ```
 
 The GitHub Action will run the checks and place `test_report.log` in the repository root for retrieval.
+
+Starter files (lightweight templates)
+
+Included starter artifacts:
+
+- `scripts/glue_job.py` — minimal Glue ETL script to edit
+- `sql/athena_query.sql` — placeholder Athena query example
+- `notes.txt` — notes template
+
+These are small templates intended to help you get started; replace them with your ETL code.
+
+See the template: `scripts/glue_job.py` and `sql/athena_query.sql` for skeletons and checklists.
